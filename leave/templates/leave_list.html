@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Account List</h2>
+  <a href="{% url 'leave_add' %}">Add New Leave</a>
+  <ul>
+    {% for leave in leaves %}
+      <li>
+        {{ leave.user }} - {{ leave.mv_reason }}
+        <a href="{% url 'leave_edit' leave.pk %}">Edit</a>
+        <a href="{% url 'leave_delete' leave.pk %}">Delete</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

@@ -1,0 +1,122 @@
+{% extends 'base2.html' %}
+{% block content %}
+<h4 class="py-3 mb-4">
+  <span class="text-muted fw-light">Dashboard</span>
+</h4>
+
+<div class="row mb-4 g-3">
+
+  <div class="col-sm-6 col-xl-4">
+    <a href="{% url 'account_list' %}">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between">
+            <div class="content-left">
+              <h3 class="mb-0">All Accounts</h3>
+              <small>Total: </small>
+            </div>
+            <span class="badge bg-label-danger rounded-circle p-2">
+              <i class="bx bx-wallet bx-sm"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <div class="col-sm-6 col-xl-4">
+    <a href="{% url 'account_list' 0 %}">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between">
+            <div class="content-left">
+              <h3 class="mb-0">PTA Accounts</h3>
+              <small>Total: </small>
+            </div>
+            <span class="badge bg-label-primary rounded-circle p-2">
+              <i class="bx bx-wallet bx-sm"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <div class="col-sm-6 col-xl-4">
+    <a href="{% url 'account_list' 1 %}">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between">
+            <div class="content-left">
+              <h3 class="mb-0">Students Accounts</h3>
+              <small>Total: </small>
+            </div>
+            <span class="badge bg-label-info rounded-circle p-2">
+              <i class="bx bx-wallet bx-sm"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  
+  <div class="col-sm-6 col-xl-4">
+    <a href="{% url 'leave_list' %}">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between">
+            <div class="content-left">
+              <h3 class="mb-0">All Movements</h3>
+              <small>Total: </small>
+            </div>
+            <span class="badge bg-label-danger rounded-circle p-2">
+              <i class="bx bx-walk bx-sm"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+  
+  <div class="col-sm-6 col-xl-4">
+    <a href="{% url 'leave_list' 0 %}">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between">
+            <div class="content-left">
+              <h3 class="mb-0">Staff Movements</h3>
+              <small>Total: </small>
+            </div>
+            <span class="badge bg-label-info rounded-circle p-2">
+              <i class="bx bx-walk bx-sm"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <div class="col-sm-6 col-xl-4">
+    <a href="{% url 'leave_list' 1 %}">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between">
+            <div class="content-left">
+              <h3 class="mb-0">Student Movements</h3>
+              <small>Total: </small>
+            </div>
+            <span class="badge bg-label-primary rounded-circle p-2">
+              <i class="bx bx-walk bx-sm"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+  
+</div>
+
+
+
+{% endblock %}

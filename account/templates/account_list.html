@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Account List</h2>
+  <a href="{% url 'account_add' %}">Add New Account</a>
+  <ul>
+    {% for account in accounts %}
+      <li>
+        {{ account.user }} - {{ account.amount }}
+        <a href="{% url 'account_edit' account.pk %}">Edit</a>
+        <a href="{% url 'account_delete' account.pk %}">Delete</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

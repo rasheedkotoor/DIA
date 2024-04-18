@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MIC DIA</title>
+    <link rel="icon" href="{% static 'images\favicon.ico' %}" type="image/x-icon">
+
+    <!--Variable declaration for csrf_token -->
+    <script>var csrf_token = "{{ csrf_token }}";</script>
+
+    <!-- Include Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- Include Bootstrap JS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+   
+    <!-- Include Tippy.js CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6.3.5/dist/tippy.css">
+
+    <!--TIPPY JS-->
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+
+
+    <!-- <link rel="stylesheet" href="{% static 'css/style.css' %}"> -->
+</head>
+<body style="overflow-x: hidden;">
+
+    {% block content %}
+        <!-- Your content here -->
+    {% endblock %}
+
+    
+    <!-- Bootstrap JS and Popper.js (for Bootstrap JS) -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>    
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+</body>
+</html>

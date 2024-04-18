@@ -1,0 +1,210 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% block content %}
+
+<h4 class="py-3 mb-4">
+  <span class="text-muted fw-light"><a href="/"> Dashboard </a> /</span> Movements
+  {% if leave_type == 0 %}
+    <a class="btn btn-sm btn-outline-primary" href="{% url 'leave_list' %}"> All </a>
+    <span class="btn btn-sm btn-primary"> Staff </span>
+    <a class="btn btn-sm btn-outline-primary" href="{% url 'leave_list' 1 %}"> Student </a>
+  {% elif leave_type == 1 %}
+    <a class="btn btn-sm btn-outline-primary" href="{% url 'leave_list' %}"> All </a>
+    <a class="btn btn-sm btn-outline-primary" href="{% url 'leave_list' 0 %}"> Staff </a>
+    <span class="btn btn-sm btn-primary"> Student </span>
+  {% else %}
+    <span class="btn btn-sm btn-primary"> All </span>
+    <a class="btn btn-sm btn-outline-primary" href="{% url 'leave_list' 0 %}"> Staff </a>
+    <a class="btn btn-sm btn-outline-primary" href="{% url 'leave_list' 1 %}"> Student </a>
+  {% endif %}
+</h4>
+
+<!-- DataTable with Buttons -->
+<div class="card">
+  <div class="card-datatable table-responsive">
+    <table class="datatables-basic table border-top" id="myTable">
+      <thead>
+        <tr>
+          <!-- <th></th> -->
+          <!-- <th></th> -->
+          <th>id</th>
+          <th>Name</th>
+          <th>mv_reason</th>
+          <th>destination</th>
+          <th>leave_permitted_from</th>
+          <th>leave_permitted_to</th>
+          <!-- <th>returned_on</th> -->
+          <th>status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for leave in leaves %}
+        <tr>
+          <!-- <td class=""></td> -->
+          <!-- <td class=""></td> -->
+          <td class="">{{ forloop.counter }}</td>
+          <td class="">{{ leave.user }}</td>
+          <td class="">{{ leave.mv_reason }}</td>
+          <td class="">{{ leave.destination }}</td>
+          <td class="">{{ leave.leave_permitted_from }}</td>
+          <td class="">{{ leave.leave_permitted_to }}</td>
+          <!-- <td class="">{{ leave.returned_on }}</td> -->
+          <td class="">{{ leave.get_status_display }}</td>
+          <td class="">
+            <a class="btn-sm" href="{% url 'leave_edit' leave.pk %}"><i class="bx bx-edit-alt me-1"></i></a>
+            <a class="btn-sm" href="{% url 'leave_delete' leave.pk %}"><i class="bx bx-trash me-1"></i></a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="offcanvas offcanvas-end" id="add-new-record">
+  <div class="offcanvas-header border-bottom">
+    <h5 class="offcanvas-title" id="exampleModalLabel">New Record</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body flex-grow-1">
+    <form class="add-new-record pt-0 row g-2" id="l-form-add-new-record" action="{% url 'leave_list' %}" method="POST">
+      {% csrf_token %}
+      <div class="col-sm-12">
+        <label class="form-label" for="user">User</label>
+        <div class="input-group input-group-merge">
+          <span id="user2" class="input-group-text"><i class="bx bx-user"></i></span>
+          {{ form.user }}
+          <!-- <input type="text" id="user" class="form-control dt-full-name dt-user" name="user" placeholder="" aria-label="Select User" aria-describedby="user2" /> -->
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <label class="form-label" for="mv_reason">MV Reason</label>
+        <div class="input-group input-group-merge">
+          <span id="mv_reason2" class="input-group-text"><i class='bx bxs-spreadsheet'></i></span>
+          {{ form.mv_reason }}
+          <!-- <input type="text" id="mv_reason" name="mv_reason" class="form-control dt-post dt-mv_reason" placeholder="Reason" aria-label="Reason" aria-describedby="mv_reason2" /> -->
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <label class="form-label" for="destination">Destination</label>
+        <div class="input-group input-group-merge">
+          <span class="input-group-text"><i class="bx bx-home"></i></span>
+          {{ form.destination }}
+          <!-- <input type="text" id="destination" name="destination" class="form-control dt-email dt-destination" placeholder="Destination" aria-label="Destination" /> -->
+        </div>
+      </div>
+
+      <div class="col-sm-12">
+        <label class="form-label" for="leave_permitted_from">Leave Permitted From</label>
+        <div class="input-group input-group-merge">
+          <span id="leave_permitted_from2" class="input-group-text"><i class='bx bx-calendar'></i></span>
+          <!-- {{ form.leave_permitted_from }} -->
+          <input type="datetime-local" class="form-control dt-date dt-leave_permitted_from" id="leave_permitted_from" name="leave_permitted_from" aria-describedby="leave_permitted_from2" placeholder="" aria-label="" />
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <label class="form-label" for="leave_permitted_to">Leave Permitted To</label>
+        <div class="input-group input-group-merge">
+          <span id="leave_permitted_to2" class="input-group-text"><i class='bx bx-calendar'></i></span>
+          <!-- {{ form.leave_permitted_to }} -->
+          <input type="datetime-local" class="form-control dt-date dt-leave_permitted_to" id="leave_permitted_to" name="leave_permitted_to" aria-describedby="leave_permitted_to2" placeholder="" aria-label="" />
+        </div>
+      </div>
+      <!-- <div class="col-sm-12">
+        <label class="form-label" for="status">Status</label>
+        <div class="input-group input-group-merge">
+          <span id="status2" class="input-group-text"><i class='bx bx-message-square-dots'></i></span>
+          {{ form.status }} -->
+          <!-- <input type="number" id="status" name="status" class="form-control dt-salary dt-status" placeholder="Status" aria-label="Status" aria-describedby="status2" /> -->
+        <!-- </div>
+      </div> -->
+      <div class="col-sm-12">
+        <button type="submit" class="btn btn-primary data-submit me-sm-3 me-1">Submit</button>
+        <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas">Cancel</button>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+<script src="{% static 'js/leaves.js' %}"></script>
+
+<!--/ DataTable with Buttons -->
+
+<!-- DataTable with Buttons -->
+<!-- <div class="card">
+  <div class="card-datatable table-responsive">
+    <table class="datatables-basic table border-top">
+      <thead>
+        <tr>
+          <th></th>
+          <th></th>
+          <th>id</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Date</th>
+          <th>Salary</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+</div>
+
+<div class="offcanvas offcanvas-end" id="add-new-record">
+  <div class="offcanvas-header border-bottom">
+    <h5 class="offcanvas-title" id="exampleModalLabel">New Record</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body flex-grow-1">
+    <form class="add-new-record pt-0 row g-2" id="form-add-new-record" onsubmit="return false">
+      <div class="col-sm-12">
+        <label class="form-label" for="basicFullname">Full Name</label>
+        <div class="input-group input-group-merge">
+          <span id="basicFullname2" class="input-group-text"><i class="bx bx-user"></i></span>
+          <input type="text" id="basicFullname" class="form-control dt-full-name" name="basicFullname" placeholder="Select User-label="Select User-describedby="basicFullname2" />
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <label class="form-label" for="basicPost">Post</label>
+        <div class="input-group input-group-merge">
+          <span id="basicPost2" class="input-group-text"><i class='bx bxs-briefcase'></i></span>
+          <input type="text" id="basicPost" name="basicPost" class="form-control dt-post" placeholder="Web Developer" aria-label="Web Developer" aria-describedby="basicPost2" />
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <label class="form-label" for="basicEmail">Email</label>
+        <div class="input-group input-group-merge">
+          <span class="input-group-text"><i class="bx bx-envelope"></i></span>
+          <input type="text" id="basicEmail" name="basicEmail" class="form-control dt-email" placeholder="john.doe@example.com" aria-label="john.doe@example.com" />
+        </div>
+        <div class="form-text">
+          You can use letters, numbers & periods
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <label class="form-label" for="basicDate">Joining Date</label>
+        <div class="input-group input-group-merge">
+          <span id="basicDate2" class="input-group-text"><i class='bx bx-calendar'></i></span>
+          <input type="text" class="form-control dt-date" id="basicDate" name="basicDate" aria-describedby="basicDate2" placeholder="MM/DD/YYYY" aria-label="MM/DD/YYYY" />
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <label class="form-label" for="basicSalary">Salary</label>
+        <div class="input-group input-group-merge">
+          <span id="basicSalary2" class="input-group-text"><i class='bx bx-dollar'></i></span>
+          <input type="number" id="basicSalary" name="basicSalary" class="form-control dt-salary" placeholder="12000" aria-label="12000" aria-describedby="basicSalary2" />
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <button type="submit" class="btn btn-primary data-submit me-sm-3 me-1">Submit</button>
+        <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas">Cancel</button>
+      </div>
+    </form>
+
+  </div>
+</div> -->
+
+{% endblock %}
